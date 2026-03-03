@@ -1,25 +1,24 @@
-import java.util.Deque;
-import java.util.LinkedList;
+import java.util.Scanner;
 
 public class PalindroneCheckerApp {
     public static void main(String[] args) {
-        java.util.Scanner scanner = new java.util.Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
         System.out.print("Enter a string: ");
         String input = scanner.nextLine();
-        Deque<Character> deque = new LinkedList<>();
-        for (char c : input.toLowerCase().replaceAll("[^a-z]", "").toCharArray()) {
-            deque.addLast(c);
-        }
-        boolean isPalindrome = true;
-        while (deque.size() > 1) {
-            char first = deque.removeFirst();
-            char last = deque.removeLast();
-            if (first != last) {
-                isPalindrome = false;
-                break;
-            }
-        }
+        int start = 0;
+        int end = input.length() - 1;
+        boolean isPalindrome = isPalindrome(input.toLowerCase().replaceAll("[^a-z]", ""), start, end);
         System.out.println("Is palindrome: " + isPalindrome);
         scanner.close();
+    }
+
+    private static boolean isPalindrome(String str, int start, int end) {
+        if (start >= end) {
+            return true;
+        }
+        if (str.charAt(start) != str.charAt(end)) {
+            return false;
+        }
+        return isPalindrome(str, start + 1, end - 1);
     }
 }
