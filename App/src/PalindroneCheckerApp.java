@@ -1,22 +1,35 @@
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Stack;
 import java.util.Scanner;
 public class PalindroneCheckerApp {
+
     public static void main(String[] args) {
+
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter String: ");
+        System.out.print("Enter a string: ");
         String input = scanner.nextLine();
 
-        char[] arr = input.toCharArray();
+        // Convert to lowercase for case-insensitive check
+        input = input.replaceAll("\\s+", "").toLowerCase();
+
+        Queue<Character> queue = new LinkedList<>();
+        Stack<Character> stack = new Stack<>();
+
+        // Insert characters into both queue and stack
+        for (char ch : input.toCharArray()) {
+            queue.add(ch);     // FIFO
+            stack.push(ch);    // LIFO
+        }
+
         boolean isPalindrome = true;
 
-        int start = 0;
-        int end = arr.length - 1;
-        while (start < end) {
-            if (arr[start] != arr[end]) {
+        // Compare elements
+        while (!queue.isEmpty()) {
+            if (!queue.remove().equals(stack.pop())) {
                 isPalindrome = false;
                 break;
             }
-            start++;
-            end--;
         }
 
         if (isPalindrome) {
@@ -26,6 +39,5 @@ public class PalindroneCheckerApp {
         }
 
         scanner.close();
-
     }
 }
